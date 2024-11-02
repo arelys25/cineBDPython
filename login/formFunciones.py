@@ -12,8 +12,7 @@ class Funciones:
         self.ventana.geometry("%dx%d+0+0" % (w, h))
         self.ventana.config(bg='gray', cursor='boat')
         self.ventana.resizable(width=0, height=0)
-        scrollbar = Scrollbar(self.ventana,orient='vertical',command=Text.yview)
-        scrollbar.grid(row=0,column=1,sticky=tk.NS)
+        
 
         self.ventana.iconbitmap('./images/iconCine.ico')
 
