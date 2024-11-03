@@ -2,10 +2,15 @@ import tkinter as tk
 from tkinter.font import BOLD
 import util.generic as utl
 from tkinter import *
+from tkinter import ttk
 from tkinter import messagebox
+from tktooltip import ToolTip
+from login.formMaster import MasterPanel
+
 
 class Funciones:
     def __init__(self):
+    
         self.ventana = tk.Tk()
         self.ventana.title('Funciones del cine')
         w, h = self.ventana.winfo_screenwidth(), self.ventana.winfo_screenheight()
@@ -13,8 +18,9 @@ class Funciones:
         self.ventana.config(bg='gray', cursor='boat')
         self.ventana.resizable(width=0, height=0)
         
-
+        
         self.ventana.iconbitmap('./images/iconCine.ico')
+            
 
         try:
             # Guardar la referencia de la imagen
@@ -71,6 +77,9 @@ class Funciones:
         fun7.place(x=380,y=560)
         fun8 = Radiobutton(self.ventana,text= '20:50 pm',font=('Arial', 13), bg='gray',value=8,variable=opcion)
         fun8.place(x=380,y=590)
+        
+        # TOOLTIP
+        ToolTip(peli2,msg='Esta pelicula da mucho miedo')
         
         
         peli3 = tk.Label(self.ventana, text='Ouija, el origen del mal', font=('Arial', 25,BOLD), bg='gray')
@@ -258,6 +267,108 @@ class Funciones:
         agregarProductobtn = Button(self.ventana,text='Agergar producto',bd=3,bg='blue',command=agregar)
         agregarProductobtn.place(x=900,y=830)
         
+        # VENTANAS EMERGENTES
         
+        # opcion 1
+        def abrirFrame():
+            
+            img = utl.read_image('./images/hamburguesa.png',(200,200))
+            
+            top = Toplevel()
+            top.title('Nueva ventana')
+            top.config(bg='yellow')
+            top.geometry('1000x1000')
+            
+            # paso 1 crear un frame principal
+            
+            main_frame = Frame(top)
+            main_frame.pack(fill=BOTH,expand=1)
+            
+            saludo = Label(top,text='Hola Mundo!', bg='gray')
+            saludo.pack()
+            
+            # paso 2 crear un canvas
+            my_canvas = Canvas(main_frame)
+            my_canvas.pack(side=LEFT,fill= BOTH,expand=1)
+            
+            # paso 3 crear un scroll var 
+            my_scrollbar = ttk.Scrollbar(main_frame,orient=VERTICAL,command=my_canvas.yview)
+            my_scrollbar.pack(side=RIGHT,fill=Y)
+            
+            # paso 4 configurar las canvas 
+            my_canvas.config(yscrollcommand=my_scrollbar.set)
+            my_canvas.bind('<Configure>', lambda e: my_canvas.configure(scrollregion=my_canvas.bbox('all')))
+            
+            # paso 5 crear otro frame debajo del canvas 
+            seconFrame = Frame(my_canvas)
+            
+            # paso 6 agregar el nuevo frame a una ventana en el canvas 
+            my_canvas.create_window((0,0),window=seconFrame,anchor='nw')
+            
+            # SCROLL PANE
+            
+            imglbl = Label(seconFrame,image=img)
+            imglbl.pack()
+            # crear 50 botones
+            for thing in range(50):
+                Button(seconFrame,text=f'Venta {thing}!').pack(pady=10,padx=10)
+            
+            top.mainloop() # hacer que la ventana siempre se este leyendo
+        
+        newFramebtn = Button(self.ventana,text='Comprar ahora',bg='pink',command=abrirFrame)
+        newFramebtn.place(x=1000,y=900)
+        
+        # opcion 2
+        def abrirFrame2():
+            global img # sin el main loop pero definiendo nuestra variable como global para que lo pueda leer 
+            
+            img = utl.read_image('./images/hamburguesa.png',(200,200))
+            
+            top = Toplevel()
+            top.title('Nueva ventana')
+            top.config(bg='yellow')
+            
+            imglbl = Label(top,image=img)
+            imglbl.pack()
+            
+            saludo = Label(top,text='Hola Mundo!', bg='gray')
+            saludo.pack()
+            
+        
+        newFramebtn2 = Button(self.ventana,text='Vender ahora',bg='pink',command=abrirFrame2)
+        newFramebtn2.place(x=1100,y=900)
+        
+        # opcion 3
+        def abrirFrame3(img):
+            
+            top = Toplevel()
+            top.title('Nueva ventana')
+            top.config(bg='yellow')
+            
+            imglbl = Label(top,image=img)
+            imglbl.pack()
+            
+            saludo = Label(top,text='Hola Mundo!', bg='gray')
+            saludo.pack()
+            
+        img2 = utl.read_image('./images/luxe.png',(200,200))    
+        
+        newFramebtn3 = Button(self.ventana,text='Reusar ahora',bg='pink',command=lambda: abrirFrame3(img2),image=self.hamburguesa) # para agregar un command de una funcion con parametros se usa lambda 
+        newFramebtn3.place(x=1200,y=900)
+        ToolTip(newFramebtn2,msg='Esta pelicula da mucho miedo')
+        
+        def irMenu2():
+            print('ir al menu principal')
+        
+        
+        irMenu = Button(self.ventana,text='Reusar ahora',bg='pink',command=irMenu2) # para agregar un command de una funcion con parametros se usa lambda 
+        irMenu.place(x=900,y=1000)
+        ToolTip(irMenu,msg='Ir al menu p´rincipal')
+    
+       
         self.ventana.mainloop()  # Mantener la ventana abierta
+        
+    
+        
+
         
