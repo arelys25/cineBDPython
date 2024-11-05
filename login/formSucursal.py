@@ -91,11 +91,4 @@ class Sucursal:
 
             luxelbl = tk.Label(self.ventana, image=self.luxe, bg='#fcfcfc')
             luxelbl.place(x=190, y=330)
-            
-    
-            
-        
-            
-           
-            
-        
+               

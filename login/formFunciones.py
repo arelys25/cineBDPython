@@ -5,7 +5,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from tktooltip import ToolTip
-from login.formMaster import MasterPanel
+#from login.formMaster import MasterPanel
 
 
 class Funciones:
@@ -16,7 +16,7 @@ class Funciones:
         w, h = self.ventana.winfo_screenwidth(), self.ventana.winfo_screenheight()
         self.ventana.geometry("%dx%d+0+0" % (w, h))
         self.ventana.config(bg='gray', cursor='boat')
-        self.ventana.resizable(width=0, height=0)
+        self.ventana.resizable(width=1, height=1)
         
         
         self.ventana.iconbitmap('./images/iconCine.ico')
